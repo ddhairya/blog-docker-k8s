@@ -1,0 +1,60 @@
+apiVersion: skaffold/v2alpha3
+kind: Conifg
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+# stop the default behavior to push to the docker hub
+  local:
+    push: false
+# based on the file change update the image, if its .js then sync the file else rebuild it  
+  artifacts:
+    - image: ddhairya/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: ddhairya/post
+      context: post
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '/**/*.js'
+            dest: .
+    - image: ddhairya/comment
+      context: comment
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '/**/*.js'
+            dest: .
+    - image: ddhairya/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '/**/*.js'
+            dest: .
+    - image: ddhairya/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '/**/*.js'
+            dest: .
+    - image: ddhairya/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '/**/*.js'
+            dest: .

@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: api.com
+      http:
+        paths:
+          - path: /post
+            pathType: Prefix
+            backend:
+              service:
+                name: post-ipsrv
+                port:
+                  number: 5000
+          - path: /comment
+            pathType: Prefix
+            backend:
+              service:
+                name: comment-srv
+                port:
+                  number: 5001
+          - path: /query
+            pathType: Prefix
+            backend:
+              service:
+                name: query-srv
+                port:
+                  number: 5050
+          - path: /moderation
+            pathType: Prefix
+            backend:
+              service:
+                name: moderation-srv
+                port:
+                  number: 5051
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000

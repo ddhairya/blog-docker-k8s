@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-ipsrv
+spec:
+  type: ClusterIP
+  selector:
+    app: post
+  ports:
+    - name: post
+      protocol: TCP
+      port: 5000
+      targetPort: 5000

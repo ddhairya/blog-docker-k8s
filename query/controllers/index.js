@@ -1,0 +1,1 @@
+module.exports.queryController = require('./query.controller')

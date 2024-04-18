@@ -1,0 +1,1 @@
+module.exports.moderationController = require('./moderation.controller')
